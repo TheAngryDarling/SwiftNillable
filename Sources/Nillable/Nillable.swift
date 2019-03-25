@@ -101,5 +101,9 @@ public func isNil<V>(_ value: V, treatNSNullAsNil: Bool = true) -> Bool {
     return v.isNil
 }
 
+// AnyNil: Pure swift variant of NSNull.  real definition is Optional<Any>.none
+// Great when working with arrays and dictionaries that can contain Any as a value type
+public let AnyNil: Any = (Optional<Any>.none as Any)
+
 
 
