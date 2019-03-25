@@ -91,8 +91,15 @@ public extension Nillable {
         guard let v = self.safeRootUnwrap else { return nil }
         return v as? T
     }
+
 }
 
+// Adds a simple global function to test if any object is nil
+public func isNil<V>(_ value: V, treatNSNullAsNil: Bool = true) -> Bool {
+    guard !(!treatNSNullAsNil && value is NSNull) else { return false }
+    guard let v = value as? Nillable else { return false }
+    return v.isNil
+}
 
 
 

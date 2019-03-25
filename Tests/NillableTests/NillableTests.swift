@@ -51,10 +51,23 @@ class NillableTests: XCTestCase {
         
     }
     
+    func testIsNilFunc() {
+        let nilObj: String? = nil
+        let nonNilObj: String? = "Hello World"
+        let nullOb = NSNull()
+        
+        XCTAssert(isNil(nilObj), "Failed, obj is nil and this should return true")
+        XCTAssert(!isNil(nonNilObj), "Failed, obj is not nil and this should return false")
+        XCTAssert(isNil(nullOb), "Failed, obj is nil and this should return true")
+        XCTAssert(!isNil(nullOb, treatNSNullAsNil: false), "Failed, obj is nil and this should return false")
+        
+    }
+    
     
     static var allTests = [
         ("testIsNil", testIsNil),
         ("testWrappedTypes", testWrappedTypes),
-        ("testNilInAny", testNilInAny)
+        ("testNilInAny", testNilInAny),
+        ("testIsNilFunc", testIsNilFunc)
     ]
 }
