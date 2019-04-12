@@ -52,7 +52,7 @@ public protocol Nillable {
     func safeRootUnwrap<T>(usingType type: T.Type) -> T?
 }
 
-public extension Nillable {
+extension Nillable {
     
     public var isRootNil: Bool {
         return (self.safeRootUnwrap == nil)
