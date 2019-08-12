@@ -157,9 +157,9 @@ public extension Nillable {
 ///   - treatNSNullAsNil: Bool indicator to tell if the method should treat NSNull as nil
 /// - Returns: returns true if the value is actually nil otherwise false
 public func isNil<V>(_ value: V, treatNSNullAsNil: Bool = true) -> Bool {
+    guard let v = value as? Nillable else { return false }
     // If value is NSNull and not treatNSNullAsNil then we shouuld return false
     guard !(!treatNSNullAsNil && value is NSNull) else { return false }
-    guard let v = value as? Nillable else { return false }
     return v.isNil
 }
 
@@ -168,4 +168,15 @@ public func isNil<V>(_ value: V, treatNSNullAsNil: Bool = true) -> Bool {
 public let AnyNil: Any = (Optional<Any>.none as Any)
 
 
-
+/// A Simple method to check to see if any Object Type is nillable
+///
+/// - Parameters:
+///   - tp: Object type to check
+///   - treatNSNullAsNil: Bool indicator to tell if the method should treat NSNull as nil
+/// - Returns: returns true if the type is actually nillable otherwise false
+public func isNilType<V>(_ tp: V.Type, treatNSNullAsNil: Bool = true) -> Bool {
+    guard tp is Nillable.Type else { return false }
+    // If type is NSNull and not treatNSNullAsNil then we shouuld return false
+    guard !(!treatNSNullAsNil && tp == NSNull.self) else { return false }
+    return true
+}
