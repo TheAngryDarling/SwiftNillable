@@ -21,7 +21,7 @@ class NillableTests: XCTestCase {
         if let nillableOpt = optAny as? Nillable {
             XCTAssert(!nillableOpt.isNil, "optAny was not nil")
             XCTAssert(nillableOpt.isWrappedType(String.self), "optAny Wrapped element was not of String type")
-            _ = op.unsafeUnwrap(usingType: String.self)
+            _ = nillableOpt.unsafeUnwrap(usingType: String.self)
         }
     }
 
