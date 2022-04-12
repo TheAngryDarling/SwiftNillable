@@ -21,6 +21,8 @@ extension NSNull: Nillable {
     /// This will always return Any.self
     public static var wrappedRootType: Any.Type { return Any.self }
 
+    public static var nilAnyValue: Any { return NSNull() }
+
     /// Implementation for Nillable.
     /// Indicates if this optional object is nil or not.
     /// This will always return true

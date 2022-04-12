@@ -41,7 +41,7 @@ class NillableTests: XCTestCase {
         let nilObj: String? = nil
         let anyObj: Any = nilObj as Any
 
-        if let nilObj = anyObj as? Nillable, nilObj.isNil {} else {
+        if let nilObj = anyObj as? Nillable, !nilObj.isNil {
             XCTFail("Optional String \(anyObj) stored in any object was not found to be optional or not nil")
         }
 
@@ -74,11 +74,29 @@ class NillableTests: XCTestCase {
         XCTAssertFalse(isNilType(String.self))
     }
 
+    func testOptionalObject() {
+        func genFunc<O>(_ object: O) -> O where O: OptionalObject {
+            return O.nilValue
+        }
+        func genFunc2<O, S>(_ object: O, val: S) -> S where O: OptionalObject, O.Wrapped == S {
+            return object ?? val
+        }
+        let val: String? = "Yes"
+        let object = genFunc(val)
+        XCTAssertTrue(object.isNil)
+        let string = genFunc2(object, val: "Yes")
+        XCTAssertEqual(string, "Yes")
+
+        let string2 = object ?? "Yes"
+        XCTAssertEqual(string2, "Yes")
+    }
+
     static var allTests = [
         ("testIsNil", testIsNil),
         ("testWrappedTypes", testWrappedTypes),
         ("testNilInAny", testNilInAny),
         ("testIsNilFunc", testIsNilFunc),
-        ("testIsNilType", testIsNilType)
+        ("testIsNilType", testIsNilType),
+        ("testOptionalObject", testOptionalObject)
     ]
 }

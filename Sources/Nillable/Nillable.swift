@@ -24,6 +24,10 @@ public protocol Nillable {
     static var _nillableLock: _NillableLock { get }
     // swiftlint:disable:previous identifier_name
 
+    /// A nil value of the given type
+    /// Eg. Optional<...>.none, NSNull()
+    static var nilAnyValue: Any { get }
+
     /// Returns the Wrapped type the optional object.
     /// Eg. Optional<String> will return String.  Optional<Optional<String>> will return Optional<String>
     var wrappedType: Any.Type { get }

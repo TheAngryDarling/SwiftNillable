@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Optional: Nillable {
+extension Optional: OptionalObject {
 
     /// A sad way to lock the implementation of the Nillable protocol to within its own library.
     /// This allows for others to test against Nillable but does not allow then to create new
@@ -29,14 +29,18 @@ extension Optional: Nillable {
         return rtn
     }
 
+    public static var nilAnyValue: Any { return Optional<Wrapped>.none as Any }
+
     /// Indicates if this optional object is nil or not
     public var isNil: Bool {
-        switch self {
-        case .none:  return true
-        default:  return false
+        guard case .none = self else {
+            return false
         }
+        return true
     }
-
+    public var safelyUnwarapped: Wrapped? {
+        return self
+    }
     /// Unsafely unwraps the object.  Refer to Optional.unsafelyUnwrapped
     public var unsafeUnwrap: Any { return self.unsafelyUnwrapped }
     /// Unsafely unwrapes the root object.
@@ -49,7 +53,7 @@ extension Optional: Nillable {
     }
     /// Safely unwapes the root object
     public var safeRootUnwrap: Any? {
-        guard !isNil else { return nil }
+        guard !self.isNil else { return nil }
 
         if let nillableObject = self.unsafeUnwrap as? Nillable {
             // If our Wrapped type is of optional type, then lets unwrap it
